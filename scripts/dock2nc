@@ -29,7 +29,9 @@ logger = logging.getLogger(sys.argv[0])
 
 
 def parse_command_line():
-    parser = argparse.ArgumentParser(description=__doc__, version=dock2nc.__version__)
+    parser = argparse.ArgumentParser(description=__doc__,
+                                     version=dock2nc.__version__,
+                                     formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('dockfiles', nargs='+',
                         help='tarball containing docking files')
     parser.add_argument('pdbfiles',
