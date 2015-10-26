@@ -98,7 +98,7 @@ def mol_to_nc(mol, ncfile, groupname):
     create_variable('element', 'S1', (dim_natoms, dim_element), root=group,
                     data=[a.element for a in mol], **comp_opts)
 
-    create_variable('chain', 'S1', (dim_natoms, dim_atomname), root=group,
+    create_variable('chain', 'S1', (dim_natoms, ), root=group,
                     data=[a.chain for a in mol], **comp_opts)
 
     create_variable('altloc', 'S1', (dim_natoms, ), root=group,
