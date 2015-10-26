@@ -25,7 +25,7 @@ import sys
 
 LOGGING_FORMAT = "%(asctime)s - %(name)s - %(levelname)s: %(message)s"
 logging.basicConfig(format=LOGGING_FORMAT, level=logging.INFO)
-logger = logging.getLogger(sys.argv[0])
+logger = logging.getLogger(os.path.basename(sys.argv[0]))
 
 
 def parse_command_line():
