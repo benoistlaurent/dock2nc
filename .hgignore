@@ -3,3 +3,4 @@ Archive/
 test/
 build/
 dist/
+dock2nc/version.py
