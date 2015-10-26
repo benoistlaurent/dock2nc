@@ -3,7 +3,15 @@
 """
 Convert several docking file (located into a tarball) into netCDF docking
 files.
+
 Those files contain docking data as well as both PDB files.
+
+Dependencies and subdependencies:
+    - python-netcdf4
+        - netcdf
+        - hdf5
+        - numpy
+    - mollib
 """
 
 
