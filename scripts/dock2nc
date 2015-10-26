@@ -1,0 +1,54 @@
+#!/usr/bin/env python
+
+"""
+Convert several docking file (located into a tarball) into netCDF docking
+files.
+Those files contain docking data as well as both PDB files.
+"""
+
+
+import argparse
+import dock2nc
+import logging
+import os
+import tarfile
+import sys
+
+
+LOGGING_FORMAT = "%(asctime)s - %(name)s - %(levelname)s: %(message)s"
+logging.basicConfig(format=LOGGING_FORMAT, level=logging.INFO)
+logger = logging.getLogger(sys.argv[0])
+
+
+def parse_command_line():
+    parser = argparse.ArgumentParser(description=__doc__, version=dock2nc.__version__)
+    parser.add_argument('dockfiles', nargs='+',
+                        help='tarball containing docking files')
+    parser.add_argument('pdbfiles',
+                        help='tarball containing PDB files')
+    return parser.parse_args()
+
+
+def convert_from_tar(tarball, pdbfiles):
+    outputdir = os.path.splitext(os.path.basename(tarball))[0]
+    if not os.path.exists(outputdir):
+        os.mkdir(outputdir)
+    tar = tarfile.open(tarball)
+    names = tar.getnames()
+    for i, fname in enumerate(names):
+        logger.info('{}: file {}/{}'.format(tarball, i + 1, len(names)))
+        dockfile = os.path.join(tarball, fname)
+        convert_netcdf.convert(dockfile, pdbfiles, outputdir)
+    tar.close()
+
+
+
+def main():
+    args = parse_command_line()
+
+    tarball = args.dockfiles[0]
+    convert_from_tar(tarball, args.pdbfiles)
+    
+
+if __name__ == '__main__':
+    main()
