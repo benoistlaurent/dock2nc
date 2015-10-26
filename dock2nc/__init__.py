@@ -139,7 +139,7 @@ def mol_to_nc(mol, ncfile, groupname):
 def read_pdb_from_tar(pdbid, tar):
     pdbname = '{}.pdb'.format(pdbid)
     stream = tar.extractfile(pdbname)
-    return mollib.mymolecule.read_pdb(stream, name=pdbname)
+    return mollib.read_pdb(stream, name=pdbname)
 
 
 def today():
