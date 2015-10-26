@@ -14,8 +14,12 @@ import os
 import tarfile
 import time
 
+import eta
 import version
+
 __version__ = version.VERSION
+
+
 
 
 def create_variable(name, type, dims, root, data, **kwargs):
