@@ -50,7 +50,8 @@ def convert_from_tar(tarball, pdbfiles):
     
     names = tar.getnames()
     for i, fname in enumerate(names):
-        logger.info('{}: file {}/{}'.format(tarball, i + 1, len(names)))
+        if (i % 10 == 0):
+            logger.info('{}: file {}/{}'.format(tarball, i + 1, len(names)))
         dockfile = os.path.join(tarball, fname)
         dock2nc.convert(dockfile, pdbfiles, outputdir)
     tar.close()
