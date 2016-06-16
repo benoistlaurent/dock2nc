@@ -7,6 +7,7 @@ import argparse
 import logging
 import os
 import tarfile
+import shutil
 import sys
 
 import dock2nc
@@ -53,7 +54,32 @@ def convert_from_tar(tarball, pdbfiles):
         dockfile = os.path.join(tarball, fname)
         dock2nc.convert(dockfile, pdbfiles, nc_output_name(fname))
     tar.close()
+
+    # Finally create a tarball and removing old files.
+    tar_directory(outputdir, outputdir + '_nc.tar')
+    remove_directory(outputdir)
+
     logger.debug("Converting %s done", tarball)
+
+
+def tar_directory(path, outputpath):
+    """Create a tarball of a directory.
+
+    The tarball is named after `path` basename with extension tar.
+    """
+    logger.debug("Creating archive from %s", path)
+    tar = tarfile.open(outputpath, 'w')
+    for name in os.listdir(path):
+        name = os.path.join(path, name)
+        tar.add(name)
+    tar.close()
+    logger.debug("Creating archive from %s done", path)
+
+
+def remove_directory(path):
+    """Recursively remove a directory."""
+    logger.debug("Removing directory %s", path)
+    shutil.rmtree(path)
 
 
 def convert_from_ascii(source, pdbfiles):
