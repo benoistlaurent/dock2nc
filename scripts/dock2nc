@@ -12,7 +12,7 @@ import sys
 import dock2nc
 
 
-LOGGING_FORMAT = "%(asctime)s - %(name)s - %(levelname)s: %(message)s"
+LOGGING_FORMAT = "%(asctime)s - %(levelname)s: %(message)s"
 logging.basicConfig(format=LOGGING_FORMAT, level=logging.INFO)
 logger = logging.getLogger(os.path.basename(sys.argv[0]))
 
@@ -29,33 +29,55 @@ def parse_command_line():
 
 
 def convert_from_tar(tarball, pdbfiles):
-    logger.debug("Start converting {}".format(tarball))
+    def nc_output_name(dockingfile_name):
+        pdbid1, pdbid2 = dockingfile_name.split('--')[:2]
+        fname = '{}--{}.nc'.format(pdbid1, pdbid2)
+        return os.path.join(outputdir, fname)
+
+    logger.debug("Converting %s", tarball)
     outputdir = os.path.splitext(os.path.basename(tarball))[0]
     tar = tarfile.open(tarball)
 
-    logger.info("Output directory: {}".format(outputdir))
+    logger.info("Output directory: %s", outputdir)
     if not os.path.exists(outputdir):
         os.mkdir(outputdir)
 
     names = tar.getnames()
     number_of_tasks = len(names)
     eta = dock2nc.eta.ETA(number_of_tasks)
+    mod = 10 if len(names) > 10 else 1
     for i, fname in enumerate(names):
-        if (i % 10 == 0):
+        if (i % mod == 0):
             msg = "{}: file {}/{} (ETA: {})"
             msg = msg.format(tarball, i + 1, number_of_tasks, eta.eta())
             logger.info(msg)
-            eta.done(10)
+            eta.done(mod)
         dockfile = os.path.join(tarball, fname)
-        dock2nc.convert(dockfile, pdbfiles, outputdir)
+        dock2nc.convert(dockfile, pdbfiles, nc_output_name(fname))
     tar.close()
-    logger.debug("Done converting {}".format(tarball))
+    logger.debug("Converting %s done", tarball)
+
+
+def convert_from_ascii(source, pdbfiles):
+    """Convert an ASCII docking file to a NetCDF docking file.
+
+    Args:
+        source (str): Path to docking file
+        pdbfiles (str): Path to tarball containing PDB files.
+    """
+    tokens = target.split('--')
+    target = '{}--{}.nc'.format(tokens[0], tokens[1])
+    logger.debug("Start converting %s --> %s", source, target)
+    dock2nc.convert(source, pdbfiles, target)
 
 
 def main():
     args = parse_command_line()
-    for tarball in args.dockfiles:
-        convert_from_tar(tarball, args.pdbfiles)
+    for source in args.dockfiles:
+        if source.endswith('.tar'):
+            convert_from_tar(source, args.pdbfiles)
+        else:
+            convert_from_ascii(source, args.pdbfiles)
 
 
 if __name__ == '__main__':
