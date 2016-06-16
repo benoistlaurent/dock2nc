@@ -61,7 +61,7 @@ def main():
     for i in xrange(N):
         time.sleep(1.0)
         eta.done(1)
-        print eta.eta()
+        print(eta.eta())
 
 
 if __name__ == '__main__':
