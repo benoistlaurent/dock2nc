@@ -12,8 +12,8 @@ import sys
 import dock2nc
 
 
-LOGGING_FORMAT = "%(asctime)s - %(name)s - %(levelname)s: %(message)s"
-logging.basicConfig(format=LOGGING_FORMAT, level=logging.INFO)
+LOGGING_FORMAT = "%(asctime)s - %(levelname)s: %(message)s"
+logging.basicConfig(format=LOGGING_FORMAT, level=logging.DEBUG)
 logger = logging.getLogger(os.path.basename(sys.argv[0]))
 
 
@@ -52,10 +52,28 @@ def convert_from_tar(tarball, pdbfiles):
     logger.debug("Done converting {}".format(tarball))
 
 
+def convert_from_ascii(source, pdbfiles):
+    """Convert an ASCII docking file to a NetCDF docking file.
+
+    Args:
+        source (str): Path to docking file
+        pdbfiles (str): Path to tarball containing PDB files.
+    """
+    target = os.path.splitext(os.path.basename(source))[0] + '.nc'
+    if '--' in target:
+        split = target.split('--')
+        target = '{}--{}.nc'.format(split[0], split[1])
+    logger.debug("Start converting %s --> %s", source, target)
+    dock2nc.convert(source, pdbfiles, target)
+
+
 def main():
     args = parse_command_line()
-    for tarball in args.dockfiles:
-        convert_from_tar(tarball, args.pdbfiles)
+    for source in args.dockfiles:
+        if source.endswith('.tar'):
+            convert_from_tar(source, args.pdbfiles)
+        else:
+            convert_from_ascii(source, args.pdbfiles)
 
 
 if __name__ == '__main__':

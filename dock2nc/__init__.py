@@ -166,8 +166,9 @@ def convert(dockingfilename, pdbfilestarname, outputname):
     It includes both PDB files and old docking file data.
 
     Args:
-        dockingfilename (str): Path to input docking file
-        pdbfilestarname (str): Path to tarball containing all PDB files
+        dockingfilename (str): Path to input docking file.
+        pdbfilestarname (str): Path to tarball containing all PDB files.
+        outputname (str): Path to output nc file.
     """
     prefix = os.path.basename(dockingfilename).split('.')[0]
     pdbid1, pdbid2 = prefix.split('--')[:2]
@@ -175,9 +176,7 @@ def convert(dockingfilename, pdbfilestarname, outputname):
     tar = tarfile.open(pdbfilestarname, 'r')
 
     # Open output netCDF file.
-    fname = '{}--{}.nc'.format(pdbid1, pdbid2)
-    fname = os.path.join(outputdir, fname)
-    ncfile = netCDF4.Dataset(fname, mode='w', format='NETCDF4')
+    ncfile = netCDF4.Dataset(outputname, mode='w', format='NETCDF4')
     ncfile.history = 'Created on {}'.format(today())
 
     # Save molecule 1 to nc.
