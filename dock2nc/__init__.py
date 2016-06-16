@@ -17,7 +17,7 @@ import tarfile
 import time
 
 
-__version__ = '1.0.0'
+__version__ = '1.1.0'
 
 # create logger
 module_logger = logging.getLogger('dock2nc.dock2nc')
