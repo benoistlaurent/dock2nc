@@ -16,6 +16,8 @@ import os
 import tarfile
 import time
 
+from . import eta
+
 
 __version__ = '1.0.0'
 
@@ -170,6 +172,7 @@ def convert(dockingfilename, pdbfilestarname, outputname):
         pdbfilestarname (str): Path to tarball containing all PDB files.
         outputname (str): Path to output nc file.
     """
+    module_logger.debug("Converting %s --> %s", dockingfilename, outputname)
     prefix = os.path.basename(dockingfilename).split('.')[0]
     pdbid1, pdbid2 = prefix.split('--')[:2]
 
@@ -193,6 +196,7 @@ def convert(dockingfilename, pdbfilestarname, outputname):
     # Close files.
     ncfile.close()
     tar.close()
+    module_logger.debug("Converting %s --> %s done", dockingfilename, outputname)
 
 
 def main():
