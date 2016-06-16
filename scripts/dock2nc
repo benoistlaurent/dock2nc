@@ -16,11 +16,12 @@ Dependencies and subdependencies:
 
 
 import argparse
-import dock2nc
 import logging
 import os
 import tarfile
 import sys
+
+import dock2nc
 
 
 LOGGING_FORMAT = "%(asctime)s - %(name)s - %(levelname)s: %(message)s"

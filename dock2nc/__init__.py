@@ -7,6 +7,7 @@ netCDF file will contain both PDB data as well as docking data.
 
 
 from __future__ import print_function
+
 import mollib
 import netCDF4
 import numpy as np
@@ -14,12 +15,10 @@ import os
 import tarfile
 import time
 
-import eta
-import version
-
-__version__ = version.VERSION
+from . import eta
 
 
+__version__ = '1.0.0'
 
 
 def create_variable(name, type, dims, root, data, **kwargs):
