@@ -17,6 +17,21 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 
+# Try to import mollib and dies if not found.
+try:
+    import mollib
+except ImportError:
+    url = 'https://bitbucket.org/lvamparys/mollib'
+    msg = 'module mollib not found - it can be downloaded from {}'.format(url)
+    raise ImportError(msg)
+
+
+requirements = [
+    'netcdf4',
+    'mollib'
+]
+
+
 setup(name='dock2nc',
       version='1.1.0',
       description='Convert ASCII docking files to netCDF.',
@@ -30,7 +45,8 @@ setup(name='dock2nc',
       include_package_data=True,
       license="GPL",
       zip_safe=False,
-      keywords='oprpred',
+      keywords='dock2nc',
+      install_requires=requirements,
       classifiers=[
           'Development Status :: 4 - Beta',
           'Intended Audience :: End Users/Desktop',

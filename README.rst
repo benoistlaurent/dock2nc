@@ -20,9 +20,7 @@ those input tarballs.
 Dependencies
 ------------
 
-- python-netcdf4
-    - netcdf
-    - hdf5
+- netcdf4
     - numpy
 - `mollib`_ 
   

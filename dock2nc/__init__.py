@@ -8,13 +8,14 @@ netCDF file will contain both PDB data as well as docking data.
 
 from __future__ import print_function
 
-import mollib
-import netCDF4
-import numpy as np
 import logging
 import os
 import tarfile
 import time
+
+import mollib
+import netCDF4
+import numpy as np
 
 
 __version__ = '1.1.0'
