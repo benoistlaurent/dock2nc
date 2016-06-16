@@ -89,10 +89,11 @@ def convert_from_ascii(source, pdbfiles):
         source (str): Path to docking file
         pdbfiles (str): Path to tarball containing PDB files.
     """
-    tokens = target.split('--')
+    tokens = source.split('--')
     target = '{}--{}.nc'.format(tokens[0], tokens[1])
-    logger.debug("Start converting %s --> %s", source, target)
+    logger.info("Converting %s --> %s", source, target)
     dock2nc.convert(source, pdbfiles, target)
+    logger.info("Converting %s --> %s done", source, target)
 
 
 def main():
