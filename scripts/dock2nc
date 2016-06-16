@@ -1,18 +1,6 @@
 #!/usr/bin/env python
 
-"""
-Convert several docking file (located into a tarball) into netCDF docking
-files.
-
-Those files contain docking data as well as both PDB files.
-
-Dependencies and subdependencies:
-    - python-netcdf4
-        - netcdf
-        - hdf5
-        - numpy
-    - mollib
-"""
+"""Convert ASCII docking files into netCDF docking files."""
 
 
 import argparse
@@ -31,8 +19,8 @@ logger = logging.getLogger(os.path.basename(sys.argv[0]))
 
 def parse_command_line():
     parser = argparse.ArgumentParser(description=__doc__,
-                                     version=dock2nc.__version__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument('--version', action='version', version='%(prog)s ' + dock2nc.__version__)
     parser.add_argument('dockfiles', nargs='+',
                         help='tarball containing docking files')
     parser.add_argument('pdbfiles',
