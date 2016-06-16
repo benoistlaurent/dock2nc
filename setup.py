@@ -33,7 +33,7 @@ requirements = [
 
 
 setup(name='dock2nc',
-      version='1.1.0',
+      version='1.1.1',
       description='Convert ASCII docking files to netCDF.',
       long_description=readme + '\n\n' + history,
       author="Benoist LAURENT",
