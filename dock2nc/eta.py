@@ -19,22 +19,16 @@ class ETA(object):
             ndone = self.timing_data[-1][0]
         ndone += n
         self.timing_data.append((ndone, now()))
-    
+
     @property
     def elapsed(self):
         return (self.timing_data[-1][1] - self.start)
-
-    def foo(self):
-        x = [e[0] for e in self.timing_data]
-        y = [e[1] - self.start for e in self.timing_data]
-        pyplot.plot(x, y, 'o-')
-        pyplot.show()
 
     def _calculate(self):
         """Estimate ETA using simple linear regression."""
         if len(self.timing_data) < 2:
             return 0.0
-        x, y = zip(*self.timing_data)        
+        x, y = zip(*self.timing_data)
         x = [el[0] for el in self.timing_data]
         y = [el[1] - self.start for el in self.timing_data]
         a = [xi * yi for (xi, yi) in zip(x, y)]
@@ -42,7 +36,6 @@ class ETA(object):
         slope = mean(a) / mean(b)
         eta = slope * self.number_of_tasks - y[-1]
         return eta
-
 
     def eta(self, fmt="%(hours)02.0f:%(minutes)02.0f:%(seconds)02.3fs"):
         """Return ETA formatted as decribed in `fmt`."""
@@ -69,10 +62,7 @@ def main():
         time.sleep(1.0)
         eta.done(1)
         print eta.eta()
-        
 
-
-    
 
 if __name__ == '__main__':
     main()

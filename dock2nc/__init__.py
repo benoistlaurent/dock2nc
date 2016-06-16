@@ -15,8 +15,6 @@ import os
 import tarfile
 import time
 
-from . import eta
-
 
 __version__ = '1.0.0'
 

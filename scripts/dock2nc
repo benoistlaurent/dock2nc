@@ -48,7 +48,7 @@ def convert_from_tar(tarball, pdbfiles):
     logger.info("Output directory: {}".format(outputdir))
     if not os.path.exists(outputdir):
         os.mkdir(outputdir)
-    
+
     names = tar.getnames()
     number_of_tasks = len(names)
     eta = dock2nc.eta.ETA(number_of_tasks)
@@ -64,13 +64,11 @@ def convert_from_tar(tarball, pdbfiles):
     logger.debug("Done converting {}".format(tarball))
 
 
-
 def main():
     args = parse_command_line()
-
     for tarball in args.dockfiles:
         convert_from_tar(tarball, args.pdbfiles)
-    
+
 
 if __name__ == '__main__':
     main()
