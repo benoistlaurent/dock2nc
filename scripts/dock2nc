@@ -44,14 +44,12 @@ def convert_from_tar(tarball, pdbfiles):
 
     names = tar.getnames()
     number_of_tasks = len(names)
-    eta = dock2nc.eta.ETA(number_of_tasks)
     mod = 10 if len(names) > 10 else 1
     for i, fname in enumerate(names):
         if (i % mod == 0):
-            msg = "{}: file {}/{} (ETA: {})"
-            msg = msg.format(tarball, i + 1, number_of_tasks, eta.eta())
+            msg = "{}: file {}/{}"
+            msg = msg.format(tarball, i + 1, number_of_tasks)
             logger.info(msg)
-            eta.done(mod)
         dockfile = os.path.join(tarball, fname)
         dock2nc.convert(dockfile, pdbfiles, nc_output_name(fname))
     tar.close()

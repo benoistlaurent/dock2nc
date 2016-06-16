@@ -16,13 +16,12 @@ import os
 import tarfile
 import time
 
-from . import eta
-
 
 __version__ = '1.0.0'
 
 # create logger
 module_logger = logging.getLogger('dock2nc.dock2nc')
+
 
 def create_variable(name, type, dims, root, data, **kwargs):
     dim_names = tuple(dim.name for dim in dims)
