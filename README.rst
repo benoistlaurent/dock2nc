@@ -21,7 +21,7 @@ Dependencies
 ------------
 
 - netcdf4
-    - numpy
+- numpy
 - `mollib`_ 
   
 
