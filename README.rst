@@ -26,7 +26,28 @@ Dependencies
 - netcdf4
 - numpy
 - `mollib`_ 
-  
+
+
+Installation
+------------
+
+dock2nc is a pure Python package.
+Its installation follows the classic procedure:
+
+    .. code-block:: bash
+
+        $ tar xvzf dock2nc-1.1.1.tar.gz
+        $ cd dock2nc-1.1.1
+        $ make install
+
+Alternatively, the python setup.py script can be use for a custom installation.
+As an example, to install dock2nc in the Python user directory, uncompress
+the archive and type:
+
+    .. code-block:: bash
+
+        $ python setup.py --user
+
 
 Input archives
 --------------
