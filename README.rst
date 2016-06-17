@@ -4,6 +4,9 @@ dock2nc
 
 A package to convert ASCII docking files to NetCDF files.
 
+* GitHub: https://github.com/benoistlaurent/dock2nc
+* Free Software: GPL License
+
 It merges the 2 PDB files and the docking data file into a single binary NetCDF
 file. It reduces the number of I/O operation required to analyze docking
 results.
@@ -33,10 +36,12 @@ It is important to known that when a tarball is given in input, dock2nc
 expects the files to be at the root of the tarball.
 
 As an example, this is how one would create an input tarball containing PDB
-files::
+files:
 
-    $ cd /path/to/pdbfiles/directory
-    $ tar cf archive.tar *.pdb
+    .. code-block:: bash
+
+        $ cd /path/to/pdbfiles/directory
+        $ tar cf archive.tar *.pdb
 
 The same prevails for docking files.
 
@@ -44,13 +49,17 @@ The same prevails for docking files.
 Example usage
 -------------
 
-* Single docking file convertion::
+* Single docking file convertion:
 
-    $ dock2nc GATMA--1ZET_A--reformatted.dat.bz2 pdbfiles.tar
+    .. code-block:: bash
+
+        $ dock2nc GATMA--1ZET_A--reformatted.dat.bz2 pdbfiles.tar
 
 * Convert an archive full of docking files:
 
-    $ dock2nc dockingfiles.tar pdbfiles.tar
+    .. code-block:: bash
+
+        $ dock2nc dockingfiles.tar pdbfiles.tar
 
 
 .. _mollib: https://bitbucket.org/lvamparys/mollib
