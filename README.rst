@@ -8,7 +8,7 @@ A package to convert ASCII docking files to NetCDF files.
 * Free Software: GPL License
 
 It merges the 2 PDB files and the docking data file into a single binary NetCDF
-file. It reduces the number of I/O operation required to analyze docking
+file. It reduces the number of I/O operations required to analyze docking
 results.
 
 dock2nc allows to convert docking files one at the time or entire archives
