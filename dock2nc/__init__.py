@@ -18,7 +18,7 @@ import netCDF4
 import numpy as np
 
 
-__version__ = '1.1.1'
+__version__ = '1.1.2'
 
 # create logger
 module_logger = logging.getLogger('dock2nc.dock2nc')

@@ -36,8 +36,8 @@ Its installation follows the classic procedure:
 
     .. code-block:: bash
 
-        $ tar xvzf dock2nc-1.1.1.tar.gz
-        $ cd dock2nc-1.1.1
+        $ tar xvzf dock2nc-1.1.2.tar.gz
+        $ cd dock2nc-1.1.2
         $ make install
 
 Alternatively, the python setup.py script can be use for a custom installation.
