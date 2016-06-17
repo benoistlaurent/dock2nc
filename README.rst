@@ -8,7 +8,7 @@ A package to convert ASCII docking files to NetCDF files.
 * Free Software: GPL License
 
 It merges the 2 PDB files and the docking data file into a single binary NetCDF
-file. It reduces the number of I/O operation required to analyze docking
+file. It reduces the number of I/O operations required to analyze docking
 results.
 
 dock2nc allows to convert docking files one at the time or entire archives
@@ -26,7 +26,28 @@ Dependencies
 - netcdf4
 - numpy
 - `mollib`_ 
-  
+
+
+Installation
+------------
+
+dock2nc is a pure Python package.
+Its installation follows the classic procedure:
+
+    .. code-block:: bash
+
+        $ tar xvzf dock2nc-1.1.2.tar.gz
+        $ cd dock2nc-1.1.2
+        $ make install
+
+Alternatively, the python setup.py script can be use for a custom installation.
+As an example, to install dock2nc in the Python user directory, uncompress
+the archive and type:
+
+    .. code-block:: bash
+
+        $ python setup.py --user
+
 
 Input archives
 --------------
