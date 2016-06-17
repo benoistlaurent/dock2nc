@@ -27,7 +27,7 @@ except ImportError:
 
 
 requirements = [
-    'netcdf4',
+    'netcdf4',  # includes numpy
     'mollib'
 ]
 
