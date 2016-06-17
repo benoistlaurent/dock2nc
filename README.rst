@@ -36,7 +36,8 @@ Its installation follows the classic procedure:
 
     .. code-block:: bash
 
-        $ tar xvzf dock2nc-1.1.2.tar.gz
+        $ # Download and extract dock2nc archive
+        $ curl -L https://github.com/benoistlaurent/dock2nc/archive/1.1.2.tar.gz | tar xv
         $ cd dock2nc-1.1.2
         $ make install
 
