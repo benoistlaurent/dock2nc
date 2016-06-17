@@ -7,19 +7,21 @@ netCDF file will contain both PDB data as well as docking data.
 
 
 from __future__ import print_function
-import mollib
-import netCDF4
-import numpy as np
+
+import logging
 import os
 import tarfile
 import time
 
-import eta
-import version
+import mollib
+import netCDF4
+import numpy as np
 
-__version__ = version.VERSION
 
+__version__ = '1.1.1'
 
+# create logger
+module_logger = logging.getLogger('dock2nc.dock2nc')
 
 
 def create_variable(name, type, dims, root, data, **kwargs):
@@ -50,7 +52,9 @@ def strlist_to_netcdf(a, dim=None):
 
 
 def dockingfile_to_nc(dockingfilename, ncfile, groupname):
+    module_logger.debug("Converting dockingfile to netcdf")
     data = mollib.pdbbuilder.DockingList(dockingfilename)
+    module_logger.debug("Read %d position from docking file", data.Npositions)
     group = ncfile.createGroup(groupname)
     dim_npositions = group.createDimension('Npositions', data.Npositions)
     dim_rotation = group.createDimension('Rotation_dim', 6)
@@ -76,9 +80,11 @@ def dockingfile_to_nc(dockingfilename, ncfile, groupname):
     group['Elj'].units = 'kcal/mol'
     group['Ecoul'].units = 'kcal/mol'
     group['Etot'].units = 'kcal/mol'
+    module_logger.debug("Converting dockingfile to netcdf done")
 
 
 def mol_to_nc(mol, ncfile, groupname):
+    module_logger.debug("Converting %s to netcdf", groupname)
     group = ncfile.createGroup(groupname)
 
     dim_spatial = group.createDimension('Dim3D', 3)
@@ -138,12 +144,16 @@ def mol_to_nc(mol, ncfile, groupname):
     group['bfactor'].description = 'temperature factor'
     group['occupancy'].description = 'occupancy'
     group['xyz'].description = '3d coordinates'
+    module_logger.debug("Converting %s to netcdf done", groupname)
 
 
 def read_pdb_from_tar(pdbid, tar):
+    module_logger.debug("Reading %s from tarball %s", pdbid, tar.name)
     pdbname = '{}.pdb'.format(pdbid)
     stream = tar.extractfile(pdbname)
-    return mollib.read_pdb(stream, name=pdbname)
+    m = mollib.read_pdb(stream, name=pdbname)
+    module_logger.debug("Read %d atoms from %s", len(m), pdbid)
+    return m
 
 
 def today():
@@ -151,25 +161,25 @@ def today():
     return time.strftime('%Y-%m-%d %H:%M:%S')
 
 
-def convert(dockingfilename, pdbfilestarname, outputdir):
+def convert(dockingfilename, pdbfilestarname, outputname):
     """Convert an old docking file to a new docking file.
 
     New docking file is in netCDF 4 format.
     It includes both PDB files and old docking file data.
 
-    Arguments:
-        dockingfilename: path to input docking file
-        pdbfilestarname: path to tarball containing all PDB files
+    Args:
+        dockingfilename (str): Path to input docking file.
+        pdbfilestarname (str): Path to tarball containing all PDB files.
+        outputname (str): Path to output nc file.
     """
+    module_logger.debug("Converting %s --> %s", dockingfilename, outputname)
     prefix = os.path.basename(dockingfilename).split('.')[0]
     pdbid1, pdbid2 = prefix.split('--')[:2]
 
     tar = tarfile.open(pdbfilestarname, 'r')
 
     # Open output netCDF file.
-    fname = '{}--{}.nc'.format(pdbid1, pdbid2)
-    fname = os.path.join(outputdir, fname)
-    ncfile = netCDF4.Dataset(fname, mode='w', format='NETCDF4')
+    ncfile = netCDF4.Dataset(outputname, mode='w', format='NETCDF4')
     ncfile.history = 'Created on {}'.format(today())
 
     # Save molecule 1 to nc.
@@ -186,6 +196,7 @@ def convert(dockingfilename, pdbfilestarname, outputdir):
     # Close files.
     ncfile.close()
     tar.close()
+    module_logger.debug("Converting %s --> %s done", dockingfilename, outputname)
 
 
 def main():
